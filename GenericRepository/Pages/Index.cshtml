@@ -1,0 +1,45 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+<form method="post">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	Add new name:
+	<input asp-for="person!.Name" />
+	<input class="btn btn-primary btn-sm" type="submit" />
+	<span asp-validation-for="person!.Name" class="text-danger"></span>
+</form>
+<hr />
+<form method="post">
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Guid</th>
+				<th scope="col">
+					<a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+						@Html.DisplayNameFor(model => model.people[0].Name)
+					</a>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.people != null)
+			{
+				foreach (var man in Model.people)
+				{
+					<tr>
+						<th scope="row">@man.Id</th>
+						<td>@man.Name</td>
+						<td>
+							<a class="btn btn-secondary btn-sm" asp-page="./Edit" asp-route-id="@man.Id">Edit</a> |
+							<button class="btn btn-danger btn-sm" type="submit" asp-page-handler="Delete" asp-route-id="@man.Id">delete</button>
+						</td>
+					</tr>
+				}
+
+			}
+		</tbody>
+	</table>
+</form>
